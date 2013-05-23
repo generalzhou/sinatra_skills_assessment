@@ -1,0 +1,71 @@
+<table>
+  <tr>
+    <td>Skill</td>
+    <td>Years</td>
+    <td>Formal?</td>
+    <td>Remove?</td>
+  </tr>
+
+<% @user.proficiencies.each do |pro| %>
+  <tr>
+    <td>
+      <%= pro.skill.name + " (" + pro.skill.context + ")" %>
+    </td>
+    <td>
+      <%= pro.years %>
+    </td>
+    <td>
+      <%= pro.formal.to_s %>
+    </td>
+    <td>
+      <form action='/skills/delete' method='post'>
+        <input type="submit" class="remove_skill" value='Remove'>
+        <input type="hidden" name='pro_id' value="<%= pro.id %>">
+      </form>
+    </td>
+
+  </tr>
+<% end %>
+  <tr>
+    <td>
+      <h2>Add a skill</h2>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Skill</td>
+    <td>Years</td>
+    <td>Formal?</td>
+    <td>Add?</td>
+  </tr>
+
+  <tr>
+    <form action='/skills/edit' method='post'>
+    <td>
+      <select name="skill_id">
+        <% Skill.all.each do |skill| %>
+        <option value='<%= skill.id %>'><%= skill.name + " (" + skill.context + ")" %>
+        </option>
+        <% end %>
+      </select>
+    </td>
+    <td>
+      <input type="number" name="years">
+    </td>
+    <td>
+      <select name="formal">
+        <option value='true'>yes</option>
+        <option value='false'>no</option>
+      </select>
+    <td>
+      <input type='submit' value='add'>
+    </td>
+  </tr>
+  <tr>
+    <%= @errors.full_messages.first if @errors %>
+  </tr>
+</table>
+
+
+
+

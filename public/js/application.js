@@ -7,4 +7,12 @@ $(document).ready(function () {
     request.done(function () { window.location = "/"; });
   });
 
+  $('.remove_skill').submit(data, function (e) {
+    e.preventDefault();
+    console.log(data)
+    var request = $.ajax({ url: $(this).attr('href'), type: 'delete' });
+    request.done(function () { window.location = "/skills/edit"; });
+  });
+
+
 });

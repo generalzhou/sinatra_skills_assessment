@@ -1,5 +1,31 @@
 <div class="container">
   <h1>User Skills and Levels</h1>
 
-  <%# TODO: display the skills and proficiency levels for each user ... %>
+
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>Skill</td>
+      <td>Years</td>
+      <td>Formal?</td>
+    </tr>
+  <% @users.each do |user| %>
+    <% user.proficiencies.each do |pro| %>
+    <%= pro == user.proficiencies.first ? "<tr style='border-bottom:1px dotted black'>" : "<tr>" %>
+      <td>
+        <%= user.name if pro == user.proficiencies.first%>
+      </td>
+      <td>
+        <%= pro.skill.name + " (" + pro.skill.context + ")" %>
+      </td>
+      <td>
+        <%= pro.years %>
+      </td>
+      <td>
+        <%= pro.formal.to_s %>
+      </td>
+    </tr>
+    <% end %>
+  <% end %>
+  </table>
 </div>

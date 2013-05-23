@@ -1,9 +1,40 @@
 get '/' do
-  # render home page
   @users = User.all
-
   erb :index
 end
+
+#-----------SKILLZZZZZ________+_+
+
+get '/skills/edit' do
+  if_user { |user| erb :edit_skills }
+end
+
+post '/skills/edit' do
+
+  if_user do |user|
+    pro = Proficiency.new(skill: Skill.find_by_id(params[:skill_id]),
+                          years: params[:years],
+                          formal: params[:formal],
+                          user: user)
+    if pro.valid?
+      pro.save
+      redirect '/skills/edit'
+    else
+      @errors = pro.errors
+      erb :edit_skills
+    end
+  end
+end
+
+post '/skills/delete' do
+
+  if_user do |user|
+    pro = user.proficiencies.find_by_id(params[:pro_id])
+    user.proficiencies.delete(pro) if pro
+  end
+  redirect '/skills/edit'
+end
+
 
 #----------- SESSIONS -----------
 
